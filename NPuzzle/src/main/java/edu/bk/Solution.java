@@ -14,6 +14,11 @@ public class Solution {
             open.remove(0);
             if(aa.getMtdistance() == 0){
                 System.out.println(aa.getMoveDirection());
+                System.out.println(aa.getParentString());
+                String[] arraysolution = aa.getParentString().split("[-]");
+                for(int i = 0; i < arraysolution.length; i++){
+                    System.out.println(arraysolution[i]);
+                }
                 break;
             }
             if(aa.moveBot() == true){
@@ -21,6 +26,7 @@ public class Solution {
                 bot.isParentMoveBot(aa);
                 if(checkclosed(bot.getClosedMatrix()) == true){
                     insertMatrix(bot);
+                    closematrixs.add(bot.getClosedMatrix());
                     //System.out.println(bot.getClosedMatrix());
                 }
             }
@@ -29,6 +35,7 @@ public class Solution {
                 top.isParentMoveTop(aa);
                 if(checkclosed(top.getClosedMatrix()) == true){
                     insertMatrix(top);
+                    closematrixs.add(top.getClosedMatrix());
                     //System.out.println(top.getClosedMatrix());
                 }
             }
@@ -37,6 +44,7 @@ public class Solution {
                 left.isParentMoveLeft(aa);
                 if(checkclosed(left.getClosedMatrix()) == true){
                     insertMatrix(left);
+                    closematrixs.add(left.getClosedMatrix());
                     //System.out.println(left.getClosedMatrix());
                 }
             }
@@ -45,6 +53,7 @@ public class Solution {
                 right.isParentMoveRight(aa);
                 if(checkclosed(right.getClosedMatrix()) == true){
                     insertMatrix(right);
+                    closematrixs.add(right.getClosedMatrix());
                     //System.out.println(right.getClosedMatrix());
                 }
             }

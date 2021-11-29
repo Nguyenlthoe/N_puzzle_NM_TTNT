@@ -17,5 +17,13 @@ public class Test {
         a.display();
         Solution solution = new Solution();
         solution.Solve(a);
+//        System.out.println(a.moveTop());
+//        System.out.println(a.moveLeft());
+//        System.out.println(a.moveRight());
+//        System.out.println(a.moveBot());
+//        Matrix b = new Matrix();
+//        b.isParentMoveBot(a);
+//        b.display();
+//        System.out.println(b.getClosedMatrix());
     }
 }
