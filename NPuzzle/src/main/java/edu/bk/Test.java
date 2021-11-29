@@ -17,19 +17,5 @@ public class Test {
         a.display();
         Solution solution = new Solution();
         solution.Solve(a);
-//        System.out.println(a.getMtdistance());
-////        Matrix b = new Matrix();
-////        b.isParentMoveTop(a);
-////        b.display();
-//        System.out.println(a.moveBot());
-//        System.out.println(a.moveTop());
-//        System.out.println(a.moveLeft());
-//        System.out.println(a.moveRight());
-//        ArrayList<String> e = new ArrayList<String>();
-//        e.add("Dfsa");
-//        e.add("dafssaf");
-//        System.out.println(e.size());
-//        e.remove(1);
-//        System.out.println(e.size());
     }
 }
