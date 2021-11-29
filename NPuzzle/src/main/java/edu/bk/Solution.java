@@ -5,7 +5,10 @@ import java.util.ArrayList;
 public class Solution {
     private ArrayList<Matrix> open = new ArrayList<Matrix>();
     private ArrayList<String> closematrixs = new ArrayList<String>();
+    private String[] arraySolution;
     public void Solve(Matrix a){
+        open.clear();
+        closematrixs.clear();
         open.add(a);
         closematrixs.add(a.getClosedMatrix());
         System.out.println(a.getClosedMatrix());
@@ -13,12 +16,12 @@ public class Solution {
             Matrix aa = open.get(0);
             open.remove(0);
             if(aa.getMtdistance() == 0){
-                System.out.println(aa.getMoveDirection());
-                System.out.println(aa.getParentString());
-                String[] arraysolution = aa.getParentString().split("[-]");
-                for(int i = 0; i < arraysolution.length; i++){
-                    System.out.println(arraysolution[i]);
-                }
+//                System.out.println(aa.getMoveDirection());
+//                System.out.println(aa.getParentString());
+                arraySolution = aa.getParentString().replace('9', ' ').split("[-]");
+//                for(int i = 0; i < arraySolution.length; i++){
+//                    System.out.println(arraySolution[i]);
+//                }
                 break;
             }
             if(aa.moveBot() == true){
@@ -77,5 +80,8 @@ public class Solution {
             }
         }
         return true;
+    }
+    public String[] getArraySolution() {
+        return arraySolution;
     }
 }
