@@ -45,7 +45,7 @@ public class SecondaryController extends Thread{
         for(int i = 0; i < mode; i++){
             for(int j = 1; j <= mode; j++){
                 if(button[index].getText().equals(" ")){
-                    aa[i][j] = 9;
+                    aa[i][j] = mode * mode;
                     index++;
                     continue;
                 }
@@ -72,6 +72,8 @@ public class SecondaryController extends Thread{
             for(int j = 0; j < mode; j++){
                 button[index] = new Button();
                 button[index].setText(String.valueOf(index));
+                button[index].getStyleClass().add("button2");
+                button[index].getStylesheets().add(this.getClass().getResource("application.css").toExternalForm());
                 int x = index % size, y;
                 if(x == 0){
                     x = size;
