@@ -16,9 +16,9 @@ public class Solution {
             Matrix aa = open.get(0);
             open.remove(0);
             if(aa.getMtdistance() == 0){
-//                System.out.println(aa.getMoveDirection());
+                System.out.println(aa.getMoveDirection());
 //                System.out.println(aa.getParentString());
-                arraySolution = aa.getParentString().replace('9', ' ').split("[-]");
+                arraySolution = aa.getParentString().replace("25", " ").split("[-]");
 //                for(int i = 0; i < arraySolution.length; i++){
 //                    System.out.println(arraySolution[i]);
 //                }

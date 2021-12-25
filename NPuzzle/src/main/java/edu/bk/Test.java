@@ -6,13 +6,13 @@ import java.util.Scanner;
 public class Test {
     public static void main(String args[]){
         Scanner scan = new Scanner(System.in);
-        int[][] aa = new int[4][4];
-        for(int i = 0; i < 3; i++){
-            for(int j = 1; j <= 3; j++){
+        int[][] aa = new int[6][6];
+        for(int i = 0; i < 5; i++){
+            for(int j = 1; j <= 5; j++){
                 aa[i][j] = scan.nextInt();
             }
         }
-        int size = 3;
+        int size = 5;
         Matrix a = new Matrix(aa, size);
         a.display();
         Solution solution = new Solution();

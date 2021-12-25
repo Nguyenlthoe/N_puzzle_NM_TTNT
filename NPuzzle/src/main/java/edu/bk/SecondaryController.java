@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -24,66 +26,17 @@ public class SecondaryController extends Thread{
     @FXML
     private void OptionGame1() {
         mode = 3;
-        vboxlayout.getChildren().clear();
-        int index = 1;
-        for(int i = 0; i < 3; i++){
-            HBox newHbox = new HBox();
-            newHbox.setSpacing(10);
-            newHbox.setPrefSize(vboxlayout.getPrefWidth(), vboxlayout.getPrefHeight() / 3 - 5);
-            for(int j = 0; j < 3; j++){
-                button[index] = new Button();
-                //button[index].setText(String.valueOf(index));
-                button[index].setPrefSize(newHbox.getPrefWidth() / 3 - 5,newHbox.getPrefHeight());
-                newHbox.getChildren().add(button[index]);
-                System.out.println(index);
-                index++;
-            }
-            vboxlayout.getChildren().add(newHbox);
-        }
-        String firstmatrix = "2415386 7";
-        for(int i = 1; i < 10; i++){
-            button[i].setText(String.valueOf(firstmatrix.charAt(i-1)));
-        }
+        setButton(mode);
     }
     @FXML
     private void OptionGame2() {
-        vboxlayout.getChildren().clear();
         mode = 4;
-        int index = 1;
-        for(int i = 0; i < 4; i++){
-            HBox newHbox = new HBox();
-            newHbox.setSpacing(10);
-            newHbox.setPrefSize(vboxlayout.getPrefWidth(), vboxlayout.getPrefHeight() / 3 - 5);
-            for(int j = 0; j < 4; j++){
-                button[index] = new Button();
-                button[index].setText(String.valueOf(index));
-                button[index].setPrefSize(newHbox.getPrefWidth() / 3 - 5,newHbox.getPrefHeight());
-                newHbox.getChildren().add(button[index]);
-                System.out.println(index);
-                index++;
-            }
-            vboxlayout.getChildren().add(newHbox);
-        }
+        setButton(mode);
     }
     @FXML
     private void OptionGame3() {
-        vboxlayout.getChildren().clear();
-        int index = 1;
         mode = 5;
-        for(int i = 0; i < 5; i++){
-            HBox newHbox = new HBox();
-            newHbox.setSpacing(10);
-            newHbox.setPrefSize(vboxlayout.getPrefWidth(), vboxlayout.getPrefHeight() / 3 - 5);
-            for(int j = 0; j < 5; j++){
-                button[index] = new Button();
-                button[index].setText(String.valueOf(index));
-                button[index].setPrefSize(newHbox.getPrefWidth() / 3 - 5,newHbox.getPrefHeight());
-                newHbox.getChildren().add(button[index]);
-                System.out.println(index);
-                index++;
-            }
-            vboxlayout.getChildren().add(newHbox);
-        }
+        setButton(mode);
     }
     @FXML
     private void aplusAlgorithm(){
@@ -105,36 +58,78 @@ public class SecondaryController extends Thread{
         Solution solution = new Solution();
         solution.Solve(a);
         String[] solutionarray = solution.getArraySolution();
-//        for(int i = 0; i < solutionarray.length; i++){
-//            System.out.println(solutionarray[i]);
-//        }
 
-
-//        index2 = 0;
-//        TimerTask timerTask = new TimerTask() {
-//            @Override
-//            public void run() {
-//                if(index2 == solutionarray.length - 1){
-//                    cancel();
-//                }
-//                for(int i = 0; i < solutionarray.length; i++){
-//                    setMatrix(solutionarray[i]);
-//                }
-//                index2++;
-//            }
-//        };
-//        Timer timer = new Timer("Timer");
-//        timer.schedule(timerTask, 1000);
-
-//        for(int j = 0; j < solutionarray.length; j++) {
-//            try{
-//                setMatrix(solutionarray[j]);
-//                Thread.sleep(500);
-//            } catch (InterruptedException e){
-//                System.out.println("time out");
-//            }
-//        }
-
+    }
+    private void setButton(int size){
+        int size2 = size * size;
+        vboxlayout.getChildren().clear();
+        vboxlayout.setSpacing(10);
+        int index = 1;
+        for(int i = 0; i < mode; i++){
+            HBox newHbox = new HBox();
+            newHbox.setSpacing(10);
+            newHbox.setPrefSize(vboxlayout.getPrefWidth(), vboxlayout.getPrefHeight() / 3 - 5);
+            for(int j = 0; j < mode; j++){
+                button[index] = new Button();
+                button[index].setText(String.valueOf(index));
+                int x = index % size, y;
+                if(x == 0){
+                    x = size;
+                    y = index / size;
+                } else {
+                    y = index / size + 1;
+                }
+                int finalX = x;
+                int finalY = y;
+                int finalI= index;
+                int finalsize = size;
+                button[index].setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        if(finalX > 1){
+                            int indexl = (y  -  1)* finalsize + finalX - 1;
+                            if(button[indexl].getText().equals(" ")){
+                                button[indexl].setText(button[finalI].getText());
+                                button[finalI].setText(" ");
+                                return;
+                            }
+                        }
+                        if(finalY > 1){
+                            int indexl = finalsize * (y - 2) + finalX;
+                            if(button[indexl].getText().equals(" ")){
+                                button[indexl].setText(button[finalI].getText());
+                                button[finalI].setText(" ");
+                                return;
+                            }
+                        }
+                        if(finalX < finalsize){
+                            int indexl = (y - 1) * finalsize + finalX + 1;
+                            if(button[indexl].getText().equals(" ")){
+                                button[indexl].setText(button[finalI].getText());
+                                button[finalI].setText(" ");
+                                return;
+                            }
+                        }
+                        if(finalY < finalsize){
+                            int indexl = y * finalsize + finalX;
+                            if(button[indexl].getText().equals(" ")){
+                                button[indexl].setText(button[finalI].getText());
+                                button[finalI].setText(" ");
+                                return;
+                            }
+                        }
+                    }
+                });
+                button[index].setPrefSize(newHbox.getPrefWidth() / 3 - 5,newHbox.getPrefHeight());
+                newHbox.getChildren().add(button[index]);
+                //System.out.println(index);
+                if(index == mode * mode){
+                    button[index].setText(" ");
+                }
+                index++;
+            }
+            vboxlayout.getChildren().add(newHbox);
+        }
     }
     private void setMatrix(String matrixstring){
         for(int i = 1; i <= mode * mode; i++){
