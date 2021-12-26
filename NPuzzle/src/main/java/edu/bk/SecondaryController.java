@@ -15,6 +15,8 @@ public class SecondaryController extends Thread{
 	private Button[] button = new Button[100];
 	private int mode = 0;
 	private int index2 = 0;
+	private GenMatrix genMatrix = new GenMatrix();
+	private Matrix src = new Matrix();
 	@FXML
 	GridPane grid = new GridPane();
 	@FXML
@@ -61,6 +63,8 @@ public class SecondaryController extends Thread{
 
     }
     private void setButton(int size){
+    	src = genMatrix.Solve(20, size);
+    	System.out.println(src.getClosedMatrix());
         int size2 = size * size;
         vboxlayout.getChildren().clear();
         vboxlayout.setSpacing(10);
@@ -71,7 +75,11 @@ public class SecondaryController extends Thread{
             newHbox.setPrefSize(vboxlayout.getPrefWidth(), vboxlayout.getPrefHeight() / 3 - 5);
             for(int j = 0; j < mode; j++){
                 button[index] = new Button();
-                button[index].setText(String.valueOf(index));
+                if(index - 1 < 10) {                	
+                	button[index].setText(src.getClosedMatrix().charAt((index - 1)) + "");
+                } else {
+                	button[index].setText(src.getClosedMatrix().charAt((index - 10) * 2 + 10) + src.getClosedMatrix().charAt((index - 10) * 2 + 10 + 1) + "");
+                }
                 button[index].getStyleClass().add("button2");
                 button[index].getStylesheets().add(this.getClass().getResource("application.css").toExternalForm());
                 int x = index % size, y;
