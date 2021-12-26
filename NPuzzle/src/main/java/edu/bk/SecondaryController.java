@@ -64,7 +64,6 @@ public class SecondaryController extends Thread{
     }
     private void setButton(int size){
     	src = genMatrix.Solve(20, size);
-    	System.out.println(src.getClosedMatrix());
         int size2 = size * size;
         vboxlayout.getChildren().clear();
         vboxlayout.setSpacing(10);
@@ -75,11 +74,7 @@ public class SecondaryController extends Thread{
             newHbox.setPrefSize(vboxlayout.getPrefWidth(), vboxlayout.getPrefHeight() / 3 - 5);
             for(int j = 0; j < mode; j++){
                 button[index] = new Button();
-                if(index - 1 < 10) {                	
-                	button[index].setText(src.getClosedMatrix().charAt((index - 1)) + "");
-                } else {
-                	button[index].setText(src.getClosedMatrix().charAt((index - 10) * 2 + 10) + src.getClosedMatrix().charAt((index - 10) * 2 + 10 + 1) + "");
-                }
+                button[index].setText(src.getValue()[i][j + 1] + "");
                 button[index].getStyleClass().add("button2");
                 button[index].getStylesheets().add(this.getClass().getResource("application.css").toExternalForm());
                 int x = index % size, y;
@@ -133,7 +128,7 @@ public class SecondaryController extends Thread{
                 button[index].setPrefSize(newHbox.getPrefWidth() / 3 - 5,newHbox.getPrefHeight());
                 newHbox.getChildren().add(button[index]);
                 //System.out.println(index);
-                if(index == mode * mode){
+                if(src.getValue()[i][j + 1] == mode * mode){
                     button[index].setText(" ");
                 }
                 index++;

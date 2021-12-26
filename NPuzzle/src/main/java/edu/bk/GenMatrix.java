@@ -5,91 +5,86 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class GenMatrix {
-	private ArrayList<String> path = new ArrayList<String>();
-	private Queue<String> queue = new LinkedList<String>(), close = new LinkedList<String>();
-	private String des = "12345678 ";
-
-	public GenMatrix() {
-		super();
-	}
-
-	private String getState(int size) {
-		String s = "";
-		for(int i = 1; i <= size * size; i++) {
-			s += "" + i;
+	private ArrayList<Matrix> open = new ArrayList<Matrix>();
+    private ArrayList<String> closematrixs = new ArrayList<String>();
+    private String[] arraySolution;
+    public Matrix Solve(int num, int size){
+        open.clear();
+        closematrixs.clear();
+        int[][] tmp = new int[size + 1][size + 1];
+		for(int i = 0; i < size * size; i++) {
+			tmp[i / size][(i % size) + 1] = i + 1;
 		}
-//		System.out.println(s);
-		return s;
-	}
-
-	public Matrix Solve(int num, int size) {
-		queue.clear();
-		close.clear();
-		queue.offer(getState(size));
-		while (!queue.isEmpty() && num > 0) {
-			String string = queue.poll();
-			num--;
+		Matrix a = new Matrix(tmp, size);
+		a.display();
+        open.add(a);
+        closematrixs.add(a.getClosedMatrix());
+        System.out.println(a.getClosedMatrix());
+        while (num > 0){
+            Matrix aa = open.get(0);
+            num--;
 			int mark = 0;
 			while (mark == 0) {
 				int res = (int) (Math.random() * 4);
-				String newPos = "";
-				int pos = string.indexOf("9");
-				if (pos / size > 0 && res == 0) { // Up
-					newPos = string.substring(0, pos - size) + string.charAt(pos) + string.substring(pos - size + 1, pos)
-							+ string.charAt(pos - size) + string.substring(pos + 1);
-					if (!close.contains(newPos)) {
-						queue.offer(newPos);
+				if(aa.moveBot() == true && res == 0){
+					Matrix bot = new Matrix();
+					bot.isParentMoveBot(aa);
+					if(checkclosed(bot.getClosedMatrix()) == true){
+						insertMatrix(bot);
+						closematrixs.add(bot.getClosedMatrix());
 						mark = 1;
+						//System.out.println(bot.getClosedMatrix());
 					}
 				}
-				if (pos / size < (size - 1) && res == 1) { // Down
-					newPos = string.substring(0, pos) + string.charAt(pos + size) + string.substring(pos + 1, pos + size)
-							+ string.charAt(pos) + string.substring(pos + size + 1);
-					if (!close.contains(newPos)) {
-						queue.offer(newPos);
+				if(aa.moveTop() == true && res == 1){
+					Matrix top = new Matrix();
+					top.isParentMoveTop(aa);
+					if(checkclosed(top.getClosedMatrix()) == true){
+						insertMatrix(top);
+						closematrixs.add(top.getClosedMatrix());
 						mark = 1;
+						//System.out.println(top.getClosedMatrix());
 					}
 				}
-				if (pos % size > 0 && res == 2) { // Left
-					newPos = string.substring(0, pos - 1) + string.charAt(pos) + string.charAt(pos - 1)
-							+ string.substring(pos + 1);
-					if (!close.contains(newPos)) {
-						queue.offer(newPos);
+				if(aa.moveLeft() == true && res == 2){
+					Matrix left = new Matrix();
+					left.isParentMoveLeft(aa);
+					if(checkclosed(left.getClosedMatrix()) == true){
+						insertMatrix(left);
+						closematrixs.add(left.getClosedMatrix());
 						mark = 1;
+						//System.out.println(left.getClosedMatrix());
 					}
 				}
-				if (pos % size < (size - 1) && res == 3) { // Right
-					newPos = string.substring(0, pos) + string.charAt(pos + 1) + string.charAt(pos)
-							+ string.substring(pos + 1 + 1);
-					if (!close.contains(newPos)) {
-						queue.offer(newPos);
+				if(aa.moveRight() == true && res == 3){
+					Matrix right = new Matrix();
+					right.isParentMoveRight(aa);
+					if(checkclosed(right.getClosedMatrix()) == true){
+						insertMatrix(right);
+						closematrixs.add(right.getClosedMatrix());
 						mark = 1;
+						//System.out.println(right.getClosedMatrix());
 					}
 				}
-				close.offer(string);
 			}
-
-		}
-		String ans = queue.poll();
-//		System.out.println(ans);
-		int[][] aa = new int[size + 1][size + 1];
-		for(int i = 0; i < size * size; i++) {
-			aa[i / size][(i % size) + 1] = Integer.parseInt(ans.charAt(i) + "");
-		}
-		Matrix a = new Matrix(aa, size);
-		return a;
-	}
-
-	public ArrayList<String> getPath() {
-		ArrayList<String> pathRev = new ArrayList<String>();
-		for (int i = path.size() - 1; i >= 0; i--) {
-			pathRev.add(path.get(i));
-		}
-		return pathRev;
-	}
-
-	public Queue<String> getClose() {
-		return close;
-	}
+        }
+        Matrix ans = open.get(0);
+        ans.display();
+        return ans;
+    }
+    public void insertMatrix(Matrix b){
+        open.add(0, b);
+    }
+    public boolean checkclosed(String closedmatrix){
+        for(int i = 0; i < closematrixs.size(); i++){
+            if(closedmatrix.equals(closematrixs.get(i))){
+                return false;
+            }
+        }
+        return true;
+    }
+    public String[] getArraySolution() {
+        return arraySolution;
+    }
 
 }
