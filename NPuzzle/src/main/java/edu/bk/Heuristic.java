@@ -1,29 +1,37 @@
 package edu.bk;
 
+
 import java.util.ArrayList;
-
-import javafx.css.Size;
-
-public class Solution {
+ 
+public class Heuristic {
     private ArrayList<Matrix> open = new ArrayList<Matrix>();
     private ArrayList<String> closematrixs = new ArrayList<String>();
+    private ArrayList<String> path = new ArrayList<String>();
     private String[] arraySolution;
-    public void Solve(Matrix a){
-        open.clear();
-        closematrixs.clear();
+    private String string = "";
+    
+    public Heuristic() {
+		super();
+	}
+	public void Solve(Matrix a, int mode){
+		for(int i = 1; i <= mode * mode; i++) {
+			string += i + "";
+		}
+		open.clear();
+		closematrixs.clear();
+		path.clear();
         open.add(a);
         closematrixs.add(a.getClosedMatrix());
-        System.out.println(a.getClosedMatrix());
         while (open.size() > 0){
             Matrix aa = open.get(0);
             open.remove(0);
-            if(aa.getMtdistance() == 0){
+            if(aa.getClosedMatrix().compareTo(string) == 0 && aa.getMtdistance() == 0){
                 System.out.println(aa.getMoveDirection());
-//                System.out.println(aa.getParentString());
+                String [] arrayHeuristic = aa.getParentString().split("[-]");
                 arraySolution = aa.getParentString().replace("25", " ").split("[-]");
-//                for(int i = 0; i < arraySolution.length; i++){
-//                    System.out.println(arraySolution[i]);
-//                }
+                for(int i = 0; i < arrayHeuristic.length; i++){
+                	path.add(arrayHeuristic[i]);
+                }
                 break;
             }
             if(aa.moveBot() == true){
@@ -32,7 +40,6 @@ public class Solution {
                 if(checkclosed(bot.getClosedMatrix()) == true){
                     insertMatrix(bot);
                     closematrixs.add(bot.getClosedMatrix());
-                    //System.out.println(bot.getClosedMatrix());
                 }
             }
             if(aa.moveTop() == true){
@@ -41,7 +48,6 @@ public class Solution {
                 if(checkclosed(top.getClosedMatrix()) == true){
                     insertMatrix(top);
                     closematrixs.add(top.getClosedMatrix());
-                    //System.out.println(top.getClosedMatrix());
                 }
             }
             if(aa.moveLeft() == true){
@@ -50,7 +56,6 @@ public class Solution {
                 if(checkclosed(left.getClosedMatrix()) == true){
                     insertMatrix(left);
                     closematrixs.add(left.getClosedMatrix());
-                    //System.out.println(left.getClosedMatrix());
                 }
             }
             if(aa.moveRight() == true){
@@ -59,21 +64,27 @@ public class Solution {
                 if(checkclosed(right.getClosedMatrix()) == true){
                     insertMatrix(right);
                     closematrixs.add(right.getClosedMatrix());
-                    //System.out.println(right.getClosedMatrix());
                 }
             }
         }
     }
     public void insertMatrix(Matrix b){
+    	
         int index = 0;
         for(int i = 0; i < open.size(); i++){
             if(b.getAstar() > open.get(i).getAstar()){
                 index++;
             } else {
-                break;
+            	if(b.getAstar() == open.get(i).getAstar() && Math.abs(Double.parseDouble(b.getClosedMatrix()) - Double.parseDouble(string))
+            	    	< Math.abs(Double.parseDouble(open.get(i).getClosedMatrix()) - Double.parseDouble(string))) {
+            		index++;
+            	} 
+            	if (b.getAstar() < open.get(i).getAstar()){					
+            		break;
+				}
             }
         }
-        open.add(index, b);
+        open.add(index, b);   		
     }
     public boolean checkclosed(String closedmatrix){
         for(int i = 0; i < closematrixs.size(); i++){
@@ -83,7 +94,14 @@ public class Solution {
         }
         return true;
     }
+	public ArrayList<String> getPath() {
+		return path;
+	}
+	public ArrayList<String> getClosematrixs() {
+		return closematrixs;
+	}
     public String[] getArraySolution() {
         return arraySolution;
     }
+    
 }

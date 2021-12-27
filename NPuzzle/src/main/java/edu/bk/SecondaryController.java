@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 public class SecondaryController extends Thread{
 	private Button[] button = new Button[100];
@@ -28,20 +29,24 @@ public class SecondaryController extends Thread{
     @FXML
     private void OptionGame1() {
         mode = 3;
+    	src = genMatrix.Solve(16, mode);
         setButton(mode);
     }
     @FXML
     private void OptionGame2() {
         mode = 4;
+    	src = genMatrix.Solve(16, mode);
         setButton(mode);
     }
     @FXML
     private void OptionGame3() {
         mode = 5;
+    	src = genMatrix.Solve(16, mode);
         setButton(mode);
     }
     @FXML
     private void aplusAlgorithm(){
+    	setButton(mode);
         int index = 1;
         int[][] aa = new int[mode + 1][mode + 1];
         for(int i = 0; i < mode; i++){
@@ -62,8 +67,30 @@ public class SecondaryController extends Thread{
         String[] solutionarray = solution.getArraySolution();
 
     }
+    @FXML
+    private void heuAlgorithm(){
+    	setButton(mode);
+        int index = 1;
+        int[][] aa = new int[mode + 1][mode + 1];
+        for(int i = 0; i < mode; i++){
+            for(int j = 1; j <= mode; j++){
+                if(button[index].getText().equals(" ")){
+                    aa[i][j] = mode * mode;
+                    index++;
+                    continue;
+                }
+                aa[i][j] = Integer.parseInt(button[index].getText());
+                index++;
+            }
+        }
+        Matrix a = new Matrix(aa, mode);
+        a.display();
+        Heuristic heuristic = new Heuristic();
+        heuristic.Solve(a, mode);
+        String[] solutionarray = heuristic.getArraySolution();
+
+    }
     private void setButton(int size){
-    	src = genMatrix.Solve(20, size);
         int size2 = size * size;
         vboxlayout.getChildren().clear();
         vboxlayout.setSpacing(10);
