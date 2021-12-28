@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -16,8 +17,14 @@ public class SecondaryController extends Thread{
 	private Button[] button = new Button[100];
 	private int mode = 0;
 	private int index2 = 0;
+	private int step = 0;
+	private String [] path = null;
 	private GenMatrix genMatrix = new GenMatrix();
 	private Matrix src = new Matrix();
+	@FXML
+	Label lbNumOfSteps= new Label();
+	@FXML
+    Label lbNextSteps = new Label();
 	@FXML
 	GridPane grid = new GridPane();
 	@FXML
@@ -46,6 +53,7 @@ public class SecondaryController extends Thread{
     }
     @FXML
     private void aplusAlgorithm(){
+    	step = 0;
     	setButton(mode);
         int index = 1;
         int[][] aa = new int[mode + 1][mode + 1];
@@ -65,10 +73,13 @@ public class SecondaryController extends Thread{
         Solution solution = new Solution();
         solution.Solve(a);
         String[] solutionarray = solution.getArraySolution();
-
+        path = solution.getPath();
+        lbNumOfSteps.setText("Closed: " + solution.getClosematrixs().size());
+        lbNextSteps.setText("Next Step: " + path[step]);
     }
     @FXML
     private void heuAlgorithm(){
+    	step = 0;
     	setButton(mode);
         int index = 1;
         int[][] aa = new int[mode + 1][mode + 1];
@@ -88,6 +99,9 @@ public class SecondaryController extends Thread{
         Heuristic heuristic = new Heuristic();
         heuristic.Solve(a, mode);
         String[] solutionarray = heuristic.getArraySolution();
+        path = heuristic.getPath();
+        lbNumOfSteps.setText("Closed: " + heuristic.getClosematrixs().size());
+        lbNextSteps.setText("Next Step: " + path[step]);
 
     }
     private void setButton(int size){
@@ -119,11 +133,16 @@ public class SecondaryController extends Thread{
                     @Override
                     public void handle(ActionEvent event) {
                         if(finalX > 1){
-                            int indexl = (y  -  1)* finalsize + finalX - 1;
+                            int indexl = (y  -  1) * finalsize + finalX - 1;
                             if(button[indexl].getText().equals(" ")){
                                 button[indexl].setText(button[finalI].getText());
                                 button[finalI].setText(" ");
-                                return;
+                                if(path != null) {                            
+                                	System.out.println("'" + path[step] + "'" + " right");
+                                	if(step < path.length - 1 && path[step].compareTo("right") != 0) {
+                                		lbNextSteps.setText("Run Algorithm Again");
+                                	}
+                                }
                             }
                         }
                         if(finalY > 1){
@@ -131,7 +150,12 @@ public class SecondaryController extends Thread{
                             if(button[indexl].getText().equals(" ")){
                                 button[indexl].setText(button[finalI].getText());
                                 button[finalI].setText(" ");
-                                return;
+                                if(path != null) {             
+                                	System.out.println("'" + path[step] + "'" + " bot");                   	
+                                	if(step < path.length - 1 && path[step].compareTo("bot") != 0) {
+                                		lbNextSteps.setText("Run Algorithm Again");
+                                	}
+                                }
                             }
                         }
                         if(finalX < finalsize){
@@ -139,7 +163,12 @@ public class SecondaryController extends Thread{
                             if(button[indexl].getText().equals(" ")){
                                 button[indexl].setText(button[finalI].getText());
                                 button[finalI].setText(" ");
-                                return;
+                                if(path != null) {                        
+                                	System.out.println("'" + path[step] + "'" + " left");        	
+                                	if(step < path.length - 1 && path[step].compareTo("left") != 0) {
+                                		lbNextSteps.setText("Run Algorithm Again");
+                                	}
+                                }
                             }
                         }
                         if(finalY < finalsize){
@@ -147,8 +176,24 @@ public class SecondaryController extends Thread{
                             if(button[indexl].getText().equals(" ")){
                                 button[indexl].setText(button[finalI].getText());
                                 button[finalI].setText(" ");
-                                return;
+                                if(path != null) {                   
+                                	System.out.println("'" + path[step] + "'" + " top");             	
+                                	if(step < path.length - 1 && path[step].compareTo("top") != 0) {
+                                		lbNextSteps.setText("Run Algorithm Again");
+                                	}
+                                }
                             }
+                        }
+                        if(path != null) {                        	
+                        	if(step == path.length - 1) {
+                        		lbNextSteps.setText("Done");
+                        		path = null;
+                        		return;
+                        	}
+                        	if(lbNextSteps.getText().compareTo("Run Algorithm Again") != 0) {                        		
+                        		step++;
+                        		lbNextSteps.setText("Next Step: " + path[step]);
+                        	}
                         }
                     }
                 });

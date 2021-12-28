@@ -54,7 +54,16 @@
                   <Insets top="30.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#heuAlgorithm" prefHeight="72.0" prefWidth="106.0" text="Heristic Algorithm" textAlignment="CENTER" textFill="#e80e0e" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true" />
+            <Button mnemonicParsing="false" onAction="#heuAlgorithm" prefHeight="72.0" prefWidth="106.0" text="Heristic Algorithm" textAlignment="CENTER" textFill="#e80e0e" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Button>
+            <Label fx:id="lbNumOfSteps" prefHeight="24.0" prefWidth="140.0" text="Closed: " textOverrun="WORD_ELLIPSIS" wrapText="true">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="lbNextSteps" prefHeight="24.0" prefWidth="140.0" text="Next Step: " textOverrun="WORD_ELLIPSIS" wrapText="true" />
          </children></VBox>
    </right>
    <center>

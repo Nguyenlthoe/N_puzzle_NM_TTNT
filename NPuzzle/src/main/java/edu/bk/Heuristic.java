@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Heuristic {
     private ArrayList<Matrix> open = new ArrayList<Matrix>();
     private ArrayList<String> closematrixs = new ArrayList<String>();
-    private ArrayList<String> path = new ArrayList<String>();
+    private String [] path;
     private String[] arraySolution;
     private String string = "";
     
@@ -19,7 +19,6 @@ public class Heuristic {
 		}
 		open.clear();
 		closematrixs.clear();
-		path.clear();
         open.add(a);
         closematrixs.add(a.getClosedMatrix());
         while (open.size() > 0){
@@ -29,9 +28,7 @@ public class Heuristic {
                 System.out.println(aa.getMoveDirection());
                 String [] arrayHeuristic = aa.getParentString().split("[-]");
                 arraySolution = aa.getParentString().replace("25", " ").split("[-]");
-                for(int i = 0; i < arrayHeuristic.length; i++){
-                	path.add(arrayHeuristic[i]);
-                }
+            	path = aa.getMoveDirection().split("-");
                 break;
             }
             if(aa.moveBot() == true){
@@ -76,7 +73,7 @@ public class Heuristic {
                 index++;
             } else {
             	if(b.getAstar() == open.get(i).getAstar() && Math.abs(Double.parseDouble(b.getClosedMatrix()) - Double.parseDouble(string))
-            	    	< Math.abs(Double.parseDouble(open.get(i).getClosedMatrix()) - Double.parseDouble(string))) {
+            	    	> Math.abs(Double.parseDouble(open.get(i).getClosedMatrix()) - Double.parseDouble(string))) {
             		index++;
             	} 
             	if (b.getAstar() < open.get(i).getAstar()){					
@@ -94,9 +91,13 @@ public class Heuristic {
         }
         return true;
     }
-	public ArrayList<String> getPath() {
+	public String[] getPath() {
 		return path;
 	}
+	public void setPath(String[] path) {
+		this.path = path;
+	}
+	
 	public ArrayList<String> getClosematrixs() {
 		return closematrixs;
 	}
