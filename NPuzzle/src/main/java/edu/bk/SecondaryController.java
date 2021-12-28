@@ -2,6 +2,7 @@ package edu.bk;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,6 +19,7 @@ public class SecondaryController extends Thread{
 	private int mode = 0;
 	private int index2 = 0;
 	private int step = 0;
+	private int randomMT[] = new int[100];
 	private String [] path = null;
 	private GenMatrix genMatrix = new GenMatrix();
 	private Matrix src = new Matrix();
@@ -54,7 +56,7 @@ public class SecondaryController extends Thread{
     @FXML
     private void aplusAlgorithm(){
     	step = 0;
-    	setButton(mode);
+    	//setButton(mode);
         int index = 1;
         int[][] aa = new int[mode + 1][mode + 1];
         for(int i = 0; i < mode; i++){
@@ -80,7 +82,7 @@ public class SecondaryController extends Thread{
     @FXML
     private void heuAlgorithm(){
     	step = 0;
-    	setButton(mode);
+    	//setButton(mode);
         int index = 1;
         int[][] aa = new int[mode + 1][mode + 1];
         for(int i = 0; i < mode; i++){
@@ -105,6 +107,7 @@ public class SecondaryController extends Thread{
 
     }
     private void setButton(int size){
+        randommatrix();
         int size2 = size * size;
         vboxlayout.getChildren().clear();
         vboxlayout.setSpacing(10);
@@ -115,7 +118,11 @@ public class SecondaryController extends Thread{
             newHbox.setPrefSize(vboxlayout.getPrefWidth(), vboxlayout.getPrefHeight() / 3 - 5);
             for(int j = 0; j < mode; j++){
                 button[index] = new Button();
-                button[index].setText(src.getValue()[i][j + 1] + "");
+                //button[index].setText(src.getValue()[i][j + 1] + "");
+                button[index].setText(randomMT[index] + "");
+                if(randomMT[index] == mode * mode){
+                    button[index].setText(" ");
+                }
                 button[index].getStyleClass().add("button2");
                 button[index].getStylesheets().add(this.getClass().getResource("application.css").toExternalForm());
                 int x = index % size, y;
@@ -200,9 +207,9 @@ public class SecondaryController extends Thread{
                 button[index].setPrefSize(newHbox.getPrefWidth() / 3 - 5,newHbox.getPrefHeight());
                 newHbox.getChildren().add(button[index]);
                 //System.out.println(index);
-                if(src.getValue()[i][j + 1] == mode * mode){
-                    button[index].setText(" ");
-                }
+//                if(src.getValue()[i][j + 1] == mode * mode){
+//                    button[index].setText(" ");
+//                }
                 index++;
             }
             vboxlayout.getChildren().add(newHbox);
@@ -211,6 +218,79 @@ public class SecondaryController extends Thread{
     private void setMatrix(String matrixstring){
         for(int i = 1; i <= mode * mode; i++){
             button[i].setText(String.valueOf(matrixstring.charAt(i -1)));
+        }
+    }
+    private void randommatrix(){
+        int size2 = mode * mode;
+        Random random = new Random();
+        boolean[] check = new boolean[size2 + 1];
+        while (true){
+            for(int i = 1; i  <= size2 ; i++){
+                check[i] = false;
+            }
+            for(int i = 1; i <= size2; i++){
+                while (true){
+                    int tmp = random.nextInt(size2) + 1;
+                    if(check[tmp] == false){
+                        randomMT[i] = tmp;
+                        check[tmp] = true;
+                        break;
+                    }
+                }
+            }
+            if(cansolve() == true){
+                break;
+            }
+        }
+    }
+    private boolean cansolve(){
+        int N = 0;
+        int size2 = mode * mode;
+        int indexx = 0;
+        int tmp = 0;
+        for(int i = 1; i <= size2; i++){
+            tmp = 0;
+            int k = randomMT[i];
+            if(k == 1){
+                continue;
+            }
+            if(k == size2){
+                indexx = i;
+                continue;
+            }
+            for(int j = i + 1; j <= size2; j++){
+                if(k > randomMT[j]){
+                    tmp++;
+                }
+            }
+            N += tmp;
+        }
+        if(mode % 2 == 1){
+            if(N % 2 == 0){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            int kk;
+            if(indexx % mode == 0){
+                kk = indexx / mode;
+            } else {
+                kk = indexx / mode + 1;
+            }
+            if(N % 2 == 0){
+                if(kk % 2 == 0){
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                if(kk % 2 == 1){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
     }
 }
