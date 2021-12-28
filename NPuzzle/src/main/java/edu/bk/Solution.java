@@ -7,6 +7,7 @@ import javafx.css.Size;
 public class Solution {
     private ArrayList<Matrix> open = new ArrayList<Matrix>();
     private ArrayList<String> closematrixs = new ArrayList<String>();
+    private String [] path;
     private String[] arraySolution;
     public void Solve(Matrix a){
         open.clear();
@@ -18,12 +19,13 @@ public class Solution {
             Matrix aa = open.get(0);
             open.remove(0);
             if(aa.getMtdistance() == 0){
+            	path = aa.getMoveDirection().split("-");
                 System.out.println(aa.getMoveDirection());
 //                System.out.println(aa.getParentString());
                 arraySolution = aa.getParentString().replace("25", " ").split("[-]");
-//                for(int i = 0; i < arraySolution.length; i++){
-//                    System.out.println(arraySolution[i]);
-//                }
+                for(int i = 0; i < path.length; i++){
+                    System.out.println(path[i]);
+                }
                 break;
             }
             if(aa.moveBot() == true){
@@ -86,4 +88,27 @@ public class Solution {
     public String[] getArraySolution() {
         return arraySolution;
     }
+	public ArrayList<Matrix> getOpen() {
+		return open;
+	}
+	public void setOpen(ArrayList<Matrix> open) {
+		this.open = open;
+	}
+	public ArrayList<String> getClosematrixs() {
+		return closematrixs;
+	}
+	public void setClosematrixs(ArrayList<String> closematrixs) {
+		this.closematrixs = closematrixs;
+	}
+	public void setArraySolution(String[] arraySolution) {
+		this.arraySolution = arraySolution;
+	}
+	public String[] getPath() {
+		return path;
+	}
+	public void setPath(String[] path) {
+		this.path = path;
+	}
+	
+    
 }
