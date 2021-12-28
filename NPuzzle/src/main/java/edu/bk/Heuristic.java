@@ -27,11 +27,11 @@ public class Heuristic {
             open.remove(0);
             if(aa.getClosedMatrix().compareTo(string) == 0 && aa.getMtdistance() == 0){
                 System.out.println(aa.getMoveDirection());
-                String [] arrayHeuristic = aa.getParentString().split("[-]");
-                arraySolution = aa.getParentString().replace("25", " ").split("[-]");
-                for(int i = 0; i < arrayHeuristic.length; i++){
-                	path.add(arrayHeuristic[i]);
-                }
+               // String [] arrayHeuristic = aa.getParentString().split("[-]");
+                //arraySolution = aa.getParentString().replace("25", " ").split("[-]");
+//                for(int i = 0; i < arrayHeuristic.length; i++){
+//                	path.add(arrayHeuristic[i]);
+//                }
                 break;
             }
             if(aa.moveBot() == true){

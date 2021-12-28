@@ -7,11 +7,12 @@ public class Matrix {
     private int countmove;
     private int mtdistance;
     private int x_axis;
+    public static int steprow;
     private int y_axis;
     private int Astar;
     private String closedMatrix = "";
     private String moveDirection;
-    private String parentString = "";
+    //private String parentString = "";
     public static int[] indexRows = new int[100];
     public static int[] indexCols = new int[100];
     public Matrix(){
@@ -43,7 +44,7 @@ public class Matrix {
         }
         countdistance();
         Stringg();
-        this.parentString = getClosedMatrix();
+        //this.parentString = getClosedMatrix();
     }
     public void isParentMoveLeft(Matrix p){
         this.sizebox = p.getSizebox();
@@ -65,7 +66,7 @@ public class Matrix {
         this.moveDirection = p.getMoveDirection().concat("left-");
         countdistance();
         Stringg();
-        this.parentString = p.getParentString().concat("-" + getClosedMatrix());
+        //this.parentString = p.getParentString().concat("-" + getClosedMatrix());
     }
     public void isParentMoveRight(Matrix p){
         this.sizebox = p.getSizebox();
@@ -87,7 +88,7 @@ public class Matrix {
         this.moveDirection = p.getMoveDirection().concat("right-");
         countdistance();
         Stringg();
-        this.parentString = p.getParentString().concat("-" + getClosedMatrix());
+        //this.parentString = p.getParentString().concat("-" + getClosedMatrix());
     }
     public void isParentMoveTop(Matrix p){
         this.sizebox = p.getSizebox();
@@ -109,7 +110,7 @@ public class Matrix {
         this.moveDirection = p.getMoveDirection().concat("top-");
         countdistance();
         Stringg();
-        this.parentString = p.getParentString().concat("-" + getClosedMatrix());
+        //this.parentString = p.getParentString().concat("-" + getClosedMatrix());
     }
     public void isParentMoveBot(Matrix p){
         this.sizebox = p.getSizebox();
@@ -131,12 +132,12 @@ public class Matrix {
         this.moveDirection = p.getMoveDirection().concat("bot-");
         countdistance();
         Stringg();
-        this.parentString = p.getParentString().concat("-" + getClosedMatrix());
+        //this.parentString = p.getParentString().concat("-" + getClosedMatrix());
     }
     private void Stringg(){
         for(int i = 0; i < sizebox; i++){
             for(int j = 1; j <= sizebox; j++){
-                this.closedMatrix = this.closedMatrix.concat(String.valueOf(this.value[i][j]));
+                this.closedMatrix = this.closedMatrix.concat(String.valueOf(this.value[i][j]) + " ");
             }
         }
     }
@@ -190,9 +191,9 @@ public class Matrix {
         return y_axis;
     }
 
-    public String getParentString() {
-        return parentString;
-    }
+//    public String getParentString() {
+//        return parentString;
+//    }
 
     public void display(){
         for(int i = 0; i < sizebox; i++){
