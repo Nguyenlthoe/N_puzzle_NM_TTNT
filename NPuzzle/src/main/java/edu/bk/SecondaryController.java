@@ -36,13 +36,13 @@ public class SecondaryController extends Thread{
     @FXML
     private void OptionGame1() {
         mode = 3;
-    	src = genMatrix.Solve(16, mode);
+    	src = genMatrix.Solve(160, mode);
         setButton(mode);
     }
     @FXML
     private void OptionGame2() {
         mode = 4;
-    	src = genMatrix.Solve(16, mode);
+    	src = genMatrix.Solve(160, mode);
         setButton(mode);
     }
     @FXML
@@ -104,6 +104,34 @@ public class SecondaryController extends Thread{
         lbNextSteps.setText("Next Step: " + path[step]);
 
     }
+    
+    @FXML 
+    private void linearConflictHeuristic() {
+    	step = 0;
+    	setButton(mode);
+    	int index = 1;
+        int[][] aa = new int[mode + 1][mode + 1];
+        for(int i = 0; i < mode; i++){
+            for(int j = 1; j <= mode; j++){
+                if(button[index].getText().equals(" ")){
+                    aa[i][j] = mode * mode;
+                    index++;
+                    continue;
+                }
+                aa[i][j] = Integer.parseInt(button[index].getText());
+                index++;
+            }
+        }
+        Matrix a = new Matrix(aa, mode);
+        a.display();
+        LinearConflict linearConflict = new LinearConflict();
+        linearConflict.Solve(a);
+        String[] solutionarray = linearConflict.getArraySolution();
+        path = linearConflict.getPath();
+        lbNumOfSteps.setText("Closed: " + linearConflict.getClosematrixs().size());
+        lbNextSteps.setText("Next Step: " + path[step]);
+    }
+    
     private void setButton(int size){
         int size2 = size * size;
         vboxlayout.getChildren().clear();
