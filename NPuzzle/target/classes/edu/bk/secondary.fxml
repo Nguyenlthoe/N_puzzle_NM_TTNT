@@ -58,6 +58,11 @@
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin></Button>
+            <Button mnemonicParsing="false" onAction="#linearConflictHeuristic" prefHeight="72.0" prefWidth="106.0" text="Linear Conflict Algorithm" textAlignment="CENTER" textFill="#e80e0e" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
             <Label fx:id="lbNumOfSteps" prefHeight="24.0" prefWidth="140.0" text="Closed: " textOverrun="WORD_ELLIPSIS" wrapText="true">
                <VBox.margin>
                   <Insets top="20.0" />

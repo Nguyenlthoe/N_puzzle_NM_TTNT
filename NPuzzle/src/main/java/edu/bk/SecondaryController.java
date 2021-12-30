@@ -38,19 +38,19 @@ public class SecondaryController extends Thread{
     @FXML
     private void OptionGame1() {
         mode = 3;
-    	src = genMatrix.Solve(160, mode);
+    	src = genMatrix.Solve(300, mode);
         setButton(mode);
     }
     @FXML
     private void OptionGame2() {
         mode = 4;
-    	src = genMatrix.Solve(160, mode);
+    	src = genMatrix.Solve(300, mode);
         setButton(mode);
     }
     @FXML
     private void OptionGame3() {
         mode = 5;
-    	src = genMatrix.Solve(16, mode);
+    	src = genMatrix.Solve(300, mode);
         setButton(mode);
     }
     @FXML
@@ -110,7 +110,7 @@ public class SecondaryController extends Thread{
     @FXML 
     private void linearConflictHeuristic() {
     	step = 0;
-    	setButton(mode);
+//    	setButton(mode);
     	int index = 1;
         int[][] aa = new int[mode + 1][mode + 1];
         for(int i = 0; i < mode; i++){
@@ -173,7 +173,6 @@ public class SecondaryController extends Thread{
                                 button[indexl].setText(button[finalI].getText());
                                 button[finalI].setText(" ");
                                 if(path != null) {                            
-                                	System.out.println("'" + path[step] + "'" + " right");
                                 	if(step < path.length - 1 && path[step].compareTo("right") != 0) {
                                 		lbNextSteps.setText("Run Algorithm Again");
                                 	}
@@ -185,8 +184,7 @@ public class SecondaryController extends Thread{
                             if(button[indexl].getText().equals(" ")){
                                 button[indexl].setText(button[finalI].getText());
                                 button[finalI].setText(" ");
-                                if(path != null) {             
-                                	System.out.println("'" + path[step] + "'" + " bot");                   	
+                                if(path != null) {                         	
                                 	if(step < path.length - 1 && path[step].compareTo("bot") != 0) {
                                 		lbNextSteps.setText("Run Algorithm Again");
                                 	}
@@ -199,7 +197,6 @@ public class SecondaryController extends Thread{
                                 button[indexl].setText(button[finalI].getText());
                                 button[finalI].setText(" ");
                                 if(path != null) {                        
-                                	System.out.println("'" + path[step] + "'" + " left");        	
                                 	if(step < path.length - 1 && path[step].compareTo("left") != 0) {
                                 		lbNextSteps.setText("Run Algorithm Again");
                                 	}
@@ -211,8 +208,7 @@ public class SecondaryController extends Thread{
                             if(button[indexl].getText().equals(" ")){
                                 button[indexl].setText(button[finalI].getText());
                                 button[finalI].setText(" ");
-                                if(path != null) {                   
-                                	System.out.println("'" + path[step] + "'" + " top");             	
+                                if(path != null) {                            	
                                 	if(step < path.length - 1 && path[step].compareTo("top") != 0) {
                                 		lbNextSteps.setText("Run Algorithm Again");
                                 	}
