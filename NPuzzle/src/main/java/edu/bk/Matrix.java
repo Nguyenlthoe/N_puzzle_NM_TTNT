@@ -9,11 +9,17 @@ public class Matrix {
     private int x_axis;
     private int y_axis;
     private int Astar;
+//    private int linearConflictHeuristic;
     private String closedMatrix = "";
     private String moveDirection;
     private String parentString = "";
+    
+    // Do sau cua node
+    private int depth = 0;
+    
     public static int[] indexRows = new int[100];
     public static int[] indexCols = new int[100];
+    
     public Matrix(){
 
     }
@@ -44,6 +50,8 @@ public class Matrix {
         countdistance();
         Stringg();
         this.parentString = getClosedMatrix();
+        
+//        this.display();
     }
     public void isParentMoveLeft(Matrix p){
         this.sizebox = p.getSizebox();
@@ -151,6 +159,8 @@ public class Matrix {
         this.mtdistance = distance;
         this.Astar = this.mtdistance + this.countmove;
     } // đếm khoảng cách hàm h
+    
+    
     public int[][] getValue() {
         return value;
     }
@@ -209,5 +219,13 @@ public class Matrix {
 
     public String getClosedMatrix() {
         return closedMatrix;
+    }
+    
+    public void setDepth(int depth) {
+    	this.depth = depth;
+    }
+    
+    public int getDepth() {
+    	return this.depth;
     }
 }
