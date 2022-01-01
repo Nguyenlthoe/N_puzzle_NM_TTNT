@@ -4,14 +4,52 @@ import java.util.ArrayList;
 
 import javafx.css.Size;
 
-public class Solution {
+public class Solution2 {
     private ArrayList<Matrix> open = new ArrayList<Matrix>();
     private ArrayList<String> closematrixs = new ArrayList<String>();
     private String [] path;
     private String[] arraySolution;
-    public void Solve(Matrix a){
+    private int step = 1;
+    private String string = "";
+    private int mode;
+    private String calc(Matrix mt) {
+    	String s = "";
+    	if(mt == null) {    		
+    		for(int i = 0; i < mode; i++) {
+    			if(i % 2 == 0) {
+    				for(int j = 0; j < mode; j++) {
+    					s += i * mode + j + 1 + "";
+    				}
+    			} else {
+    				for(int j = 0; j < mode; j++) {
+    					s += i * mode + mode - j + "";
+    				}
+    			}
+    		}
+    		return s;
+    	} else {
+    		for(int i = 0; i < mode; i++) {
+    			if(i % 2 == 0) {
+    				for(int j = 1; j <= mode; j++) {
+    					s += mt.getValue()[i][j] + "";
+    				}
+    			} else {
+    				for(int j = mode; j >= 1; j--) {
+    					s += mt.getValue()[i][j] + "";
+    				}
+    			}
+    		}
+//    		System.out.println(s);
+//    		System.exit(1);
+    		return s;
+    	}
+    }
+    
+    public void Solve(Matrix a, int mode){
+    	this.mode = mode;
         open.clear();
         closematrixs.clear();
+		string = calc(null);
         open.add(a);
         closematrixs.add(a.getClosedMatrix());
         System.out.println(a.getClosedMatrix());
@@ -68,11 +106,24 @@ public class Solution {
     }
     public void insertMatrix(Matrix b){
         int index = 0;
+//        for(int i = 0; i < open.size(); i++){
+//            if(b.getAstar() > open.get(i).getAstar()){
+//                index++;
+//            } else {
+//                if(b.getAstar() == open.get(i).getAstar()) {
+//                	if(b.getBstar() > open.get(i).getBstar()) {
+//                		index++;
+//                	}
+//                } else {
+//                	break;
+//                }
+//            }
+//        }
         for(int i = 0; i < open.size(); i++){
-            if(b.getAstar() > open.get(i).getAstar()){
+            if(b.getBstar() > open.get(i).getBstar() || b.getAstar() > open.get(i).getAstar()){
                 index++;
             } else {
-                break;
+            	break;
             }
         }
         open.add(index, b);
