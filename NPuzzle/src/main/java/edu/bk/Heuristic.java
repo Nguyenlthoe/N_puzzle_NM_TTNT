@@ -9,14 +9,47 @@ public class Heuristic {
     private String [] path;
     private String[] arraySolution;
     private String string = "";
+    private int mode;
     
     public Heuristic() {
 		super();
 	}
+    
+    private String calc(Matrix mt) {
+    	String s = "";
+    	if(mt == null) {    		
+    		for(int i = 0; i < mode; i++) {
+    			if(i % 2 == 0) {
+    				for(int j = 0; j < mode; j++) {
+    					s += i * mode + j + 1 + "";
+    				}
+    			} else {
+    				for(int j = 0; j < mode; j++) {
+    					s += i * mode + mode - j + "";
+    				}
+    			}
+    		}
+    		return s;
+    	} else {
+    		for(int i = 0; i < mode; i++) {
+    			if(i % 2 == 0) {
+    				for(int j = 1; j <= mode; j++) {
+    					s += mt.getValue()[i][j] + "";
+    				}
+    			} else {
+    				for(int j = mode; j >= 1; j--) {
+    					s += mt.getValue()[i][j] + "";
+    				}
+    			}
+    		}
+//    		System.out.println(s);
+//    		System.exit(1);
+    		return s;
+    	}
+    }
 	public void Solve(Matrix a, int mode){
-		for(int i = 1; i <= mode * mode; i++) {
-			string += i + "";
-		}
+		this.mode = mode;
+		string = calc(null);
 		open.clear();
 		closematrixs.clear();
         open.add(a);
@@ -24,7 +57,7 @@ public class Heuristic {
         while (open.size() > 0){
             Matrix aa = open.get(0);
             open.remove(0);
-            if(aa.getClosedMatrix().compareTo(string) == 0 && aa.getMtdistance() == 0){
+            if(calc(aa).compareTo(string) == 0 && aa.getMtdistance() == 0){
                 System.out.println(aa.getMoveDirection());
                 String [] arrayHeuristic = aa.getParentString().split("[-]");
                 arraySolution = aa.getParentString().replace("25", " ").split("[-]");
@@ -72,8 +105,8 @@ public class Heuristic {
             if(b.getAstar() > open.get(i).getAstar()){
                 index++;
             } else {
-            	if(b.getAstar() == open.get(i).getAstar() && Math.abs(Double.parseDouble(b.getClosedMatrix()) - Double.parseDouble(string))
-            	    	> Math.abs(Double.parseDouble(open.get(i).getClosedMatrix()) - Double.parseDouble(string))) {
+            	if(b.getAstar() == open.get(i).getAstar() && Math.abs(Double.parseDouble(calc(b)) - Double.parseDouble(string))
+            	    	> Math.abs(Double.parseDouble(calc(open.get(i))) - Double.parseDouble(string))) {
             		index++;
             	} 
             	if (b.getAstar() < open.get(i).getAstar()){					

@@ -9,6 +9,8 @@ public class Matrix {
     private int x_axis;
     private int y_axis;
     private int Astar;
+    private int Bstar;
+    private int step = 0;
 //    private int linearConflictHeuristic;
     private String closedMatrix = "";
     private String moveDirection;
@@ -48,6 +50,7 @@ public class Matrix {
             }
         }
         countdistance();
+        countdistance2();
         Stringg();
         this.parentString = getClosedMatrix();
         
@@ -72,6 +75,7 @@ public class Matrix {
         }
         this.moveDirection = p.getMoveDirection().concat("left-");
         countdistance();
+        countdistance2();
         Stringg();
         this.parentString = p.getParentString().concat("-" + getClosedMatrix());
     }
@@ -94,6 +98,7 @@ public class Matrix {
         }
         this.moveDirection = p.getMoveDirection().concat("right-");
         countdistance();
+        countdistance2();
         Stringg();
         this.parentString = p.getParentString().concat("-" + getClosedMatrix());
     }
@@ -116,6 +121,7 @@ public class Matrix {
         }
         this.moveDirection = p.getMoveDirection().concat("top-");
         countdistance();
+        countdistance2();
         Stringg();
         this.parentString = p.getParentString().concat("-" + getClosedMatrix());
     }
@@ -138,6 +144,7 @@ public class Matrix {
         }
         this.moveDirection = p.getMoveDirection().concat("bot-");
         countdistance();
+        countdistance2();
         Stringg();
         this.parentString = p.getParentString().concat("-" + getClosedMatrix());
     }
@@ -159,7 +166,47 @@ public class Matrix {
         this.mtdistance = distance;
         this.Astar = this.mtdistance + this.countmove;
     } // đếm khoảng cách hàm h
-    
+
+    private void countdistance2(){
+        int xx = 0, yy = 0;
+        for(int i = 0; i < sizebox; i++){
+            for(int j = sizebox; j > 0; j--){
+            	if(value[i][j] != i * sizebox + j) {
+            		step  = i;
+            		break;
+            	}
+            }
+            if(step != 0) {
+            	break;
+            }
+        }
+        for(int i = 0; i < sizebox; i++){
+            for(int j = sizebox; j > 0; j--){
+            	if(value[i][j] == sizebox * sizebox) {
+            		xx = i;
+            		yy = j;
+            		break;
+            	}
+            }
+        }
+        int distance = 0;
+        for(int i = 0; i < sizebox; i++){
+            for(int j = sizebox; j > 0; j--){
+            	for(int k = sizebox; k > 0; k--) {
+            		if(value[i][j] == step * sizebox + k) {
+            			distance += Math.abs(i - step) + Math.abs(i - xx) + Math.abs(j - yy) + Math.abs(j - k);
+            		}
+            	}
+            	if(xx - 1 == step) {
+            		if(value[step][j] != step * sizebox + j) {
+            			distance++;
+            		}
+            	}
+            }
+        }
+//        System.out.println(distance);
+        this.Bstar = distance;
+    } // đếm khoảng cách hàm h
     
     public int[][] getValue() {
         return value;
@@ -228,4 +275,18 @@ public class Matrix {
     public int getDepth() {
     	return this.depth;
     }
+	public int getBstar() {
+		return Bstar;
+	}
+	public void setBstar(int bstar) {
+		Bstar = bstar;
+	}
+	public int getStep() {
+		return step;
+	}
+	public void setStep(int step) {
+		this.step = step;
+	}
+    
+    
 }

@@ -1,18 +1,16 @@
 package edu.bk;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class SecondaryController extends Thread{
 	private Button[] button = new Button[100];
@@ -38,19 +36,19 @@ public class SecondaryController extends Thread{
     @FXML
     private void OptionGame1() {
         mode = 3;
-    	src = genMatrix.Solve(300, mode);
+//    	src = genMatrix.Solve(300, mode);
         setButton(mode);
     }
     @FXML
     private void OptionGame2() {
         mode = 4;
-    	src = genMatrix.Solve(300, mode);
+//    	src = genMatrix.Solve(300, mode);
         setButton(mode);
     }
     @FXML
     private void OptionGame3() {
         mode = 5;
-    	src = genMatrix.Solve(300, mode);
+//    	src = genMatrix.Solve(300, mode);
         setButton(mode);
     }
     @FXML
@@ -98,7 +96,7 @@ public class SecondaryController extends Thread{
         }
         Matrix a = new Matrix(aa, mode);
         a.display();
-        Heuristic heuristic = new Heuristic();
+        Solution2 heuristic = new Solution2();
         heuristic.Solve(a, mode);
         String[] solutionarray = heuristic.getArraySolution();
         path = heuristic.getPath();

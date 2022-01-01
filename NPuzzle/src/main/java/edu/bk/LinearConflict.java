@@ -25,7 +25,6 @@ public class LinearConflict {
             Matrix aa = open.get(0);
             open.remove(0);
             
-            
             if(aa.getMtdistance() == 0){
             	getSolution(aa);
                 break;
@@ -151,15 +150,15 @@ public class LinearConflict {
     	
 		path = mt.getMoveDirection().split("-");
         System.out.println(mt.getMoveDirection());
-        System.out.println("parent String" + mt.getParentString());
+//        System.out.println("parent String" + mt.getParentString());
         arraySolution = mt.getParentString().replace("25", " ").split("[-]");
-        for(int i = 0 ; i < arraySolution.length ; i++) {
-        	System.out.println(arraySolution[i]);
-        }
-        	
-        for(int i = 0; i < path.length; i++){
-            System.out.println(path[i]);
-        }
+//        for(int i = 0 ; i < arraySolution.length ; i++) {
+//        	System.out.println(arraySolution[i]);
+//        }
+//        	
+//        for(int i = 0; i < path.length; i++){
+//            System.out.println(path[i]);
+//        }
     	
     }
     
@@ -173,7 +172,7 @@ public class LinearConflict {
                 break;
             }
         }
-        open.add(index, b);
+    	open.add(index, b);	
     }
     public boolean checkclosed(String closedmatrix){
         for(int i = 0; i < closematrixs.size(); i++){
