@@ -199,13 +199,13 @@ public class Matrix {
             	}
             	if(xx - 1 == step) {
             		if(value[step][j] != step * sizebox + j) {
-            			distance++;
+            			distance--;
             		}
             	}
             }
         }
 //        System.out.println(distance);
-        this.Bstar = distance;
+        this.Bstar = distance + Astar;
     } // đếm khoảng cách hàm h
     
     public int[][] getValue() {

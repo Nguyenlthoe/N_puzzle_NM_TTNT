@@ -120,7 +120,9 @@ public class Solution2 {
 //            }
 //        }
         for(int i = 0; i < open.size(); i++){
-            if(b.getBstar() > open.get(i).getBstar() || b.getAstar() > open.get(i).getAstar()){
+            if(b.getBstar() > open.get(i).getBstar()
+//            		|| b.getAstar() > open.get(i).getAstar() 
+            		){
                 index++;
             } else {
             	break;
